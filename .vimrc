@@ -17,6 +17,7 @@ Plugin 'tpope/vim-bundler'
 Plugin 'tpope/vim-endwise'
 Plugin 'rizzatti/dash.vim'
 Plugin 'tpope/vim-fugitive'
+Plugin 'godlygeek/tabular'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -64,9 +65,9 @@ set hidden
 " remember more commands and search history
 set history=10000
 set expandtab
-set tabstop=4
-set shiftwidth=4
-set softtabstop=4
+set tabstop=2
+set shiftwidth=2
+set softtabstop=2
 set autoindent
 set laststatus=2
 set showmatch
@@ -74,7 +75,11 @@ set incsearch
 set hlsearch
 " make searches case-sensitive only if they contain upper-case characters
 set ignorecase smartcase
+" Shortcut to rapidly toggle `set list`
+nmap <leader>l :set list!<CR>
 
+" Use the same symbols as TextMate for tabstops and EOLs
+set listchars=tab:▸\ ,eol:¬,trail:·
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -167,6 +172,11 @@ else
   map <C-l> <C-w>l
 endif
 
+" Textmate / Sublime indentation key mappings
+nmap <D-[> <<
+nmap <D-]> >>
+vmap <D-[> <gv
+vmap <D-]> >gv
 
 " Can't be bothered to understand ESC vs <c-c> in insert mode
 imap <c-c> <esc>
