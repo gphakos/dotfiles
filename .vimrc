@@ -19,6 +19,10 @@ Plugin 'rizzatti/dash.vim'
 Plugin 'tpope/vim-fugitive'
 Plugin 'godlygeek/tabular'
 Plugin 'airblade/vim-gitgutter'
+Plugin 'lucius'
+Plugin 'mattn/emmet-vim'
+Plugin 'kchmck/vim-coffee-script'
+Plugin 'ekalinin/Dockerfile.vim'
 Plugin 'bling/vim-airline'
 
 " All of your Plugins must be added before the following line
@@ -39,7 +43,12 @@ filetype plugin indent on    " required
 syntax on
 set relativenumber
 set number
-
+let $PATH=$PATH.":/Users/graham/bin/"
+"source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
+set laststatus=2
+set encoding=utf-8
+set guifont=Inconsolata\ for\ Powerline:h14
+let g:Powerline_symbols='unicode'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTRL-P OPTIONS
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -79,7 +88,7 @@ set hlsearch
 set ignorecase smartcase
 " Shortcut to rapidly toggle `set list`
 nmap <leader>l :set list!<CR>
-
+"let g:user_emmet_leader_key='<C-S>'
 " Use the same symbols as TextMate for tabstops and EOLs
 set listchars=tab:▸\ ,eol:¬,trail:·
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
@@ -95,7 +104,7 @@ function! InsertTabWrapper()
     let col = col('.') - 1
     if !col || getline('.')[col - 1] !~ '\k'
         return "\<tab>"
-    else
+      else
         return "\<c-p>"
     endif
 endfunction
@@ -202,22 +211,10 @@ map <leader>n :call RenameFile()<cr>
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
  map <leader>gr :topleft :split config/routes.rb<cr>
  map <leader>gg :topleft :split Gemfile<cr>
- function! ShowRoutes()
-   " Requires 'scratch' plugin
-   :topleft 100 :split __Routes__
-   " Make sure Vim doesn't write __Routes__ as a file
-   :set buftype=nofile
-   " Delete everything
-   :normal 1GdG
-   " Put routes output in buffer
-   :0r! rake -s routes
-   " Size window to number of lines (1 plus rake output length)
-   :exec ":resize " . line("$")
-   " Move cursor to bottom
-   :normal 1GG
-   " Delete empty trailing line
-   :normal dd
-endfunction
-map <leader>gR :call ShowRoutes()<cr><cr>
 
-
+if exists(":Tabularize")
+    nmap <Leader>a= :Tabularize /=<CR>
+    vmap <Leader>a= :Tabularize /=<CR>
+    nmap <Leader>a: :Tabularize /:\zs<CR>
+    vmap <Leader>a: :Tabularize /:\zs<CR>
+endif
