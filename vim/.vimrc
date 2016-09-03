@@ -23,13 +23,15 @@ Plugin 'lucius'
 Plugin 'mattn/emmet-vim'
 Plugin 'kchmck/vim-coffee-script'
 Plugin 'ekalinin/Dockerfile.vim'
-Plugin 'bling/vim-airline'
+Plugin 'vim-airline/vim-airline'
 Plugin 'tpope/vim-dispatch'
 Plugin 'Syntastic'
 Plugin 'EasyMotion'
 Plugin 'pangloss/vim-javascript'
 Plugin 'mxw/vim-jsx'
 Plugin 'ap/vim-css-color'
+Plugin 'gcorne/vim-sass-lint'
+Plugin 'gitignore'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -49,14 +51,23 @@ filetype plugin indent on    " required
 syntax on
 set relativenumber
 set number
+set clipboard=unnamed
+set noswapfile
 let $PATH=$PATH.":/Users/graham/bin/"
-"source /usr/local/lib/python2.7/site-packages/powerline/bindings/vim/plugin/powerline.vim
 set laststatus=2
 set encoding=utf-8
-set guifont=Inconsolata\ for\ Powerline:h14
 set cursorline
 hi CursorLine   cterm=NONE ctermbg=darkgrey
-let g:Powerline_symbols='unicode'
+let g:airline_powerline_fonts = 1
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_auto_loc_list = 1
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 0
+
 let g:EasyMotion_leader_key = '\'
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " CTRL-P OPTIONS
@@ -69,7 +80,7 @@ let g:ctrlp_use_caching = 0
 
 set wildignore+=*/tmp/*,*.so,*.swp,*.zip     " MacOSX/Linux
 
-let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git'
+let g:ctrlp_custom_ignore = 'node_modules\|DS_Store\|git|lib\'
 
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " BASIC EDITING CONFIGURATION
@@ -97,7 +108,9 @@ set hlsearch
 set ignorecase smartcase
 "let g:user_emmet_leader_key='<C-S>'
 " Use the same symbols as TextMate for tabstops and EOLs
-set listchars=tab:▸\ ,eol:¬,trail:·
+set listchars=tab:▸\ ,trail:·
+set list
+
 runtime macros/matchit.vim
 """"""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " STATUS LINE
@@ -233,12 +246,22 @@ let g:rspec_command = "Dispatch bundle exec rspec {spec}"
 map <Leader>t :call RunCurrentSpecFile()<CR>
 map <Leader>s :call RunNearestSpec()<CR>
 map <Leader>l :call RunLastSpec()<CR>
-map <Leader>a :call RunAllSpecs()<CR>
 
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
 " Linters
 """""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""""
+set statusline+=%#warningmsg#
+set statusline+=%{SyntasticStatuslineFlag()}
+set statusline+=%*
+
+let g:syntastic_always_populate_loc_list = 1
+let g:syntastic_loc_list_height = 5
+let g:syntastic_auto_loc_list = 0
+let g:syntastic_check_on_open = 1
+let g:syntastic_check_on_wq = 1
+
 let g:syntastic_haml_checkers = ['haml_lint']
 "let g:syntastic_ruby_checkers = ['rubylint']
 let g:jsx_ext_required = 0 " Allow jsx in .js files
 let g:syntastic_javascript_checkers = ['eslint']
+let g:syntastic_javascript_eslint_exec = '/Users/grahamphakos/.nvm/versions/node/v6.2.2/bin/eslint'
